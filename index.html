@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link href="assets/css/reset.css" rel="stylesheet">
+ 		<link href="https://fonts.googleapis.com/css?family=Quicksand|Dosis" rel="stylesheet">		
+		<!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Anne Simon | Trivia Game</title>
+
+		<style>
+
+			body {
+				line-height: 1.5em;
+				letter-spacing: 0.8px;
+				color:#fff;
+				font-family: 'Quicksand', sans-serif;
+			}
+
+			h1 {
+				font-size: 2.5em;
+				font-family: 'Dosis', sans-serif;
+				margin-bottom:3%;
+			}
+
+			p {margin-bottom:2%;}
+
+			ul {
+				list-style-type: circle;
+				margin-left:5%;
+				margin-bottom: 2%;
+			}
+
+			button {
+				background-color: #ffa101;
+				padding:2%;
+			}
+
+
+			#bckgImg {
+			    width: 100%;
+/*			    height: 400px;
+*/			    background-image: url('assets/images/foodTriviaBckg.png');
+			    background-color: #6F4E37;
+			    background-repeat: no-repeat;
+			    background-size: 100%;
+			}
+
+			#info {
+				margin:15% 5% 5%;
+				width:80%;
+				background-color:#474747;
+				padding:3%;
+				border-radius: 2%;
+			}
+
+		</style>
+
+	</head>
+	
+	<body id="bckgImg">
+	  <div id="info">
+
+		<h1>Food Trivia Game</h1>
+			<p>Welcome to the Food Trivia Game!</p>
+			<p>This game has a total of 5 questions to complete! Here are the details of the game:</p>
+		    	<ul>
+		    		<li>Timer starts once you begin the game. You have -- seconds to answer each question</li>
+		    		<li>Feedback (i.e., whether your answer is correct or incorrect) will be provided after you answer each question</li>
+		    		<li>If you don't answer the question before the timer runs out, it will be counted as unanswered question</li>
+		    		<li>Your total score will be displayed at the end of the game.</li>
+		    	</ul>
+		    <p>Good luck, and have fun!</p>
+		    <p>Click the button below to begin playing the game.</p>
+		    
+		<button id="play">Play game</button>
+
+	  </div><!--end info-->
+
+<script src="assets/javascript/game.js"></script>
+
+	</body>
+</html>
