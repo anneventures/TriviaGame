@@ -2,6 +2,7 @@
 
 <html>
 	<head>
+		<meta charset="utf-8"/>		
 		<link href="assets/css/reset.css" rel="stylesheet">
  		<link href="https://fonts.googleapis.com/css?family=Quicksand|Dosis" rel="stylesheet">		
 		<!-- <link href="assets/css/style.css" rel="stylesheet"> -->
@@ -17,12 +18,22 @@
 				color:#fff;
 			}
 
+			h1, h2, h3 {
+				margin-bottom:3%;				
+			}
+
 			h1 {
 				font-size: 2.5em;
 				line-height: 1em;
-
 				font-family: 'Dosis', sans-serif;
-				margin-bottom:3%;
+			}
+
+			h2 {
+				font-size:1.5em;
+			}
+
+			h3 {
+				font-size:1.2em;
 			}
 
 			p {margin-bottom:2%;}
@@ -61,7 +72,7 @@
 			    background-size: 100%;
 			}
 
-			#info {
+			#info, #question1 {
 				margin:15% 5% 5%;
 				width:80%;
 				background-color:#474747;
@@ -69,6 +80,35 @@
 				border-radius: 2%;
 				border:1px solid #fff;
 			}
+
+			#question1, #question2 {
+				display: none;
+			}
+
+			#choice {
+				font-family: 'Quicksand', sans-serif;
+				font-size:1em;
+				font-weight:bold;				
+				background-color: #ffa101;
+				padding:2% 4%;
+				border: 2px solid #fff;
+				border-radius: 10%;
+				margin-right:2%;
+			}
+
+			#myProgress {
+			  width: 100%;
+			  height: 30px;
+			  position: relative;
+			  background-color: #ddd;
+			}
+
+			#myBar {
+			  background-color: #4CAF50;
+			  width: 10px;
+			  height: 30px;
+			  position: absolute;
+			}		
 
 		</style>
 
@@ -89,11 +129,86 @@
 		    <p>Good luck, and have fun!</p>
 		    <p>Click the button below to begin playing the game.</p>
 		    
-		<button id="play">Play game</button>
+		<button id="play" onclick="move()">Play game</button>
+
 
 	  </div><!--end info-->
 
-<script src="assets/javascript/game.js"></script>
+  	  <div id="question1">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Question 1</h2>
+			<p>What ingredient in bread causes it to rise?</p>
+			
+			<h3>Timer</h3>
 
+				<div id="myProgress">
+				  <div id="myBar"><span id="timerNum"></span></div>
+				</div>
+			
+				<br/>
+			
+			<button id="choice">Yeast</button><br/><br/>
+			<button id="choice">Sugar</button><br/><br/>
+			<button id="choice">Water</button><br/><br/>
+			<button id="choice">Flour</button>
+
+	  </div><!--end question1-->
+
+  	  <div id="question2">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Question 2</h2>
+			<p>What ingredient in bread causes it to rise?</p>
+			
+			<h3>Timer</h3>
+			  <div id="timerNum"></div>	
+
+				<div id="myProgress">
+				  <div id="myBar"></div>
+				</div>
+			
+				<br/>
+			
+			<button id="choice">Yeast</button><br/><br/>
+			<button id="choice">Sugar</button><br/><br/>
+			<button id="choice">Water</button><br/><br/>
+			<button id="choice">Flour</button>
+
+	  </div><!--end question2-->	  
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+function move() {
+  var elem = document.getElementById("myBar");   
+  var width = 0;
+  var id = setInterval(frame, 100);
+  function frame() {
+    if (width == 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+      document.getElementById("timerNum").innerHTML=width + "%";
+    }
+  }
+}
+
+$(document).ready(function() {
+
+	$("#play").click(function(){
+		$("#info").css({"display": "none"});		
+		$("#question1").css({"display": "block"});
+
+
+	});//end click play
+
+});//end document ready
+
+</script>
+
+
+<!-- <script src="assets/javascript/game.js"></script>
+ -->
 	</body>
 </html>
