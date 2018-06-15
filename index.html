@@ -291,28 +291,24 @@ function unanswered() {
 
 	$("#feedbackContainer").css({"display": "block"});
 
-	$("#feedback").html("<p>Time's up! The correct answer is " + correctAnswer + "</p>");    	
+	$("#feedback").html("<p>Time's up! The correct answer is " + correctAnswer + "</p>");    
+
+   	nextFrame();
+	
 
 }
 
 
-// function nextQuest() {
-// 		$("#second").css({"display": "block"});
-// }
-
-
-
-
   function frame() {
+
     if (myWidth == 100) {
-    	unanswered(); 
     	clearInterval(sec);
-    	nextFrame();
+    	unanswered(); 
     } else if ($("#correct").data("clicked")) {
+    	clearInterval(sec);    	
 		$(".question").css({"display": "none"});
  		$("#feedbackContainer").css({"display": "block"});
  		$("#feedback").html("<p>Good job! You selected the correct answer: " + correctAnswer + "</p>");
-    	clearInterval(sec);    	    	    	    	
  		nextFrame();    	
     } else {
     	myWidth++; 
@@ -324,11 +320,13 @@ function unanswered() {
 function nextFrame() {
 	setTimeout(function(){
 		$("#feedbackContainer").css({"display": "none"});
-		$("#second").css({"display": "block"});
 	}, 3000);
-}
+	//need to add function to display second question then 3 > 4 > 5
+ }
 
-	});//end click play
+
+
+});//end click play
 });//end document ready
 
 </script>
