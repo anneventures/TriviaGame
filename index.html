@@ -26,6 +26,9 @@
 				font-size: 2.5em;
 				line-height: 1em;
 				font-family: 'Dosis', sans-serif;
+				border-bottom:1px solid #ddd;
+				padding-bottom:1%;
+				text-align:center;
 			}
 
 			h2 {
@@ -103,7 +106,14 @@
 			  background-color: #ddd;
 			}
 
-			#myBar {
+			#myNextProgress {
+			  width: 30%;
+			  height: 30px;
+			  position: relative;
+			  background-color: #ddd;
+			}
+
+			#myBar, #myNextBar {
 			  background-color: #4CAF50;
 			  width: 10px;
 			  height: 30px;
@@ -129,7 +139,7 @@
 		    <p>Good luck, and have fun!</p>
 		    <p>Click the button below to begin playing the game.</p>
 		    
-		<button id="play" onclick="move()">Play game</button>
+		<button id="play">Play game</button>
 
 
 	  </div><!--end info-->
@@ -155,7 +165,7 @@
 
 	  </div><!--end question1-->
 
-  	  <div class="question">
+  	  <div class="question" id="second">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 2</h2>
 			<p>What nut is traditionally on the Waldorf salad? </p>
@@ -243,53 +253,15 @@
 	  <div id="feedbackContainer">
  		<h1>Food Trivia Game</h1>
 			<h2>Feedback</h2>
-			<p id="feedback"></p>	  	
+			<p id="feedback"></p>
+			<h3>Next question coming up... <span id="countdown"></span></h3>			
+				  	
 	  </div><!--end info-->	
 
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-
-var correctAnswer = $("#correct").text();
-
-
-
-$("#correct").click(function correct() {
-
-	$(this).data("clicked", true);
-
-});
-
-function unanswered() {
-	$(".question").css({"display": "none"});
-
-	$("#feedbackContainer").css({"display": "block"});
-
-	$("#feedback").html("<p>Time's up! You left the question unanswered! The correct answer is " + correctAnswer + "</p>");
-}
-
-function move() {
-  var elem = document.getElementById("myBar");   
-  var width = 0;
-  var sec = setInterval(frame, 100);
-
-  function frame() {
-    if (width == 100) {
-    	clearInterval(sec);
-    	unanswered();      
-    } else if ($("#correct").data("clicked")) {
-    	clearInterval(sec);    	    	    	    	
-		$(".question").css({"display": "none"});
- 		$("#feedbackContainer").css({"display": "block"});
- 		$("#feedback").html("<p>Good job! You selected the correct answer: " + correctAnswer + "</p><p>Next question will show in 3 seconds...</p>");    	
-    } else {
-    	width++; 
-    	elem.style.width = width + '%'; 
-    	document.getElementById("timerNum").innerHTML=width + " seconds";
-    }
-  }
-}
 
 $(document).ready(function() {
 
@@ -298,8 +270,65 @@ $(document).ready(function() {
 		$("#first").css({"display": "block"});
 
 
-	});//end click play
 
+var correctAnswer = $("#correct").text();
+var elem = document.getElementById("myBar");
+var myWidth = 0;
+var sec = setInterval(frame, 100);
+
+
+$("#correct").click(function() {
+
+	$(this).data("clicked", true);
+
+});
+
+
+
+
+function unanswered() {
+	$(".question").css({"display": "none"});
+
+	$("#feedbackContainer").css({"display": "block"});
+
+	$("#feedback").html("<p>Time's up! The correct answer is " + correctAnswer + "</p>");    	
+
+}
+
+
+// function nextQuest() {
+// 		$("#second").css({"display": "block"});
+// }
+
+
+
+
+  function frame() {
+    if (myWidth == 100) {
+    	unanswered(); 
+    	clearInterval(sec);
+    	nextFrame();
+    } else if ($("#correct").data("clicked")) {
+		$(".question").css({"display": "none"});
+ 		$("#feedbackContainer").css({"display": "block"});
+ 		$("#feedback").html("<p>Good job! You selected the correct answer: " + correctAnswer + "</p>");
+    	clearInterval(sec);    	    	    	    	
+ 		nextFrame();    	
+    } else {
+    	myWidth++; 
+    	elem.style.width = myWidth + '%'; 
+    	document.getElementById("timerNum").innerHTML=myWidth + " ms";
+    }
+  }
+
+function nextFrame() {
+	setTimeout(function(){
+		$("#feedbackContainer").css({"display": "none"});
+		$("#second").css({"display": "block"});
+	}, 3000);
+}
+
+	});//end click play
 });//end document ready
 
 </script>
