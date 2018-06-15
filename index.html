@@ -72,7 +72,7 @@
 			    background-size: 100%;
 			}
 
-			#info, #question1, #question2, #question3, #question4, #question5, #feedbackContainer  {
+			#info, .question, #feedbackContainer  {
 				margin:15% 5% 5%;
 				width:80%;
 				background-color:#474747;
@@ -81,7 +81,7 @@
 				border:1px solid #fff;
 			}
 
-			#question1, #question2, #question3, #question4, #question5, #feedbackContainer {
+			.question, #feedbackContainer {
 				display: none;
 			}
 
@@ -134,7 +134,7 @@
 
 	  </div><!--end info-->
 
-  	  <div id="question1">
+  	  <div class="question" id="first">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 1</h2>
 			<p>What ingredient in bread causes it to rise?</p>
@@ -155,7 +155,7 @@
 
 	  </div><!--end question1-->
 
-  	  <div id="question2">
+  	  <div class="question">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 2</h2>
 			<p>What nut is traditionally on the Waldorf salad? </p>
@@ -176,7 +176,7 @@
 
 	  </div><!--end question2-->
 
-  	  <div id="question3">
+  	  <div class="question">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 3</h2>
 			<p>What is sushi traditionally wrapped in? </p>
@@ -197,7 +197,7 @@
 
 	  </div><!--end question3-->
 
-  	  <div id="question4">
+  	  <div class="question">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 4</h2>
 			<p>What food is Hummus made from? </p>
@@ -218,7 +218,7 @@
 
 	  </div><!--end question4-->
 
-  	  <div id="question5">
+  	  <div class="question">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 5</h2>
 			<p>What is the most popular spice in the world? </p>
@@ -251,10 +251,18 @@
 
 <script>
 
-function unanswered() {
-	var correctAnswer = $("#correct").text();
+var correctAnswer = $("#correct").text();
 
-	$("#question1").css({"display": "none"});
+
+
+$("#correct").click(function correct() {
+
+	$(this).data("clicked", true);
+
+});
+
+function unanswered() {
+	$(".question").css({"display": "none"});
 
 	$("#feedbackContainer").css({"display": "block"});
 
@@ -264,15 +272,21 @@ function unanswered() {
 function move() {
   var elem = document.getElementById("myBar");   
   var width = 0;
-  var id = setInterval(frame, 100);
+  var sec = setInterval(frame, 100);
+
   function frame() {
     if (width == 100) {
-      clearInterval(id);
-      unanswered();
+    	clearInterval(sec);
+    	unanswered();      
+    } else if ($("#correct").data("clicked")) {
+    	clearInterval(sec);    	    	    	    	
+		$(".question").css({"display": "none"});
+ 		$("#feedbackContainer").css({"display": "block"});
+ 		$("#feedback").html("<p>Good job! You selected the correct answer: " + correctAnswer + "</p><p>Next question will show in 3 seconds...</p>");    	
     } else {
-      width++; 
-      elem.style.width = width + '%'; 
-      document.getElementById("timerNum").innerHTML=width + " seconds";
+    	width++; 
+    	elem.style.width = width + '%'; 
+    	document.getElementById("timerNum").innerHTML=width + " seconds";
     }
   }
 }
@@ -281,7 +295,7 @@ $(document).ready(function() {
 
 	$("#play").click(function(){
 		$("#info").css({"display": "none"});		
-		$("#question1").css({"display": "block"});
+		$("#first").css({"display": "block"});
 
 
 	});//end click play
