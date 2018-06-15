@@ -72,7 +72,7 @@
 			    background-size: 100%;
 			}
 
-			#info, #question1 {
+			#info, #question1, #question2, #question3, #question4, #question5, #feedbackContainer  {
 				margin:15% 5% 5%;
 				width:80%;
 				background-color:#474747;
@@ -81,11 +81,11 @@
 				border:1px solid #fff;
 			}
 
-			#question1, #question2 {
+			#question1, #question2, #question3, #question4, #question5, #feedbackContainer {
 				display: none;
 			}
 
-			#choice {
+			#choice, #correct {
 				font-family: 'Quicksand', sans-serif;
 				font-size:1em;
 				font-weight:bold;				
@@ -138,46 +138,128 @@
  		<h1>Food Trivia Game</h1>
 			<h2>Question 1</h2>
 			<p>What ingredient in bread causes it to rise?</p>
-			
-			<h3>Timer</h3>
+								
+				<button id="correct">Yeast</button>
+				<button id="choice">Sugar</button>
+				<button id="choice">Water</button>
+				<button id="choice">Flour</button>
 
-				<div id="myProgress">
-				  <div id="myBar"><span id="timerNum"></span></div>
-				</div>
-			
-				<br/>
-			
-			<button id="choice">Yeast</button><br/><br/>
-			<button id="choice">Sugar</button><br/><br/>
-			<button id="choice">Water</button><br/><br/>
-			<button id="choice">Flour</button>
+			<br/>
+			<br/>
+
+			<h3>Timer</h3>			
+
+			<div id="myProgress">
+				<div id="myBar"><span id="timerNum"></span></div>
+			</div>				
 
 	  </div><!--end question1-->
 
   	  <div id="question2">
  		<h1>Food Trivia Game</h1>
 			<h2>Question 2</h2>
-			<p>What ingredient in bread causes it to rise?</p>
+			<p>What nut is traditionally on the Waldorf salad? </p>
 			
-			<h3>Timer</h3>
-			  <div id="timerNum"></div>	
+				<button id="choice">Pistachio</button>
+				<button id="choice">Almond</button>
+				<button id="choice">Walnut</button>
+				<button id="correct">Cashew</button>
 
-				<div id="myProgress">
-				  <div id="myBar"></div>
-				</div>
-			
-				<br/>
-			
-			<button id="choice">Yeast</button><br/><br/>
-			<button id="choice">Sugar</button><br/><br/>
-			<button id="choice">Water</button><br/><br/>
-			<button id="choice">Flour</button>
+			<br/>
+			<br/>
 
-	  </div><!--end question2-->	  
+			<h3>Timer</h3>			
+
+			<div id="myProgress">
+				<div id="myBar"><span id="timerNum"></span></div>
+			</div>				
+
+	  </div><!--end question2-->
+
+  	  <div id="question3">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Question 3</h2>
+			<p>What is sushi traditionally wrapped in? </p>
+			
+				<button id="choice">Rice</button>
+				<button id="correct">Seaweed</button>
+				<button id="choice">Sashimi</button>
+				<button id="choice">Carrots</button>
+
+			<br/>
+			<br/>
+
+			<h3>Timer</h3>			
+
+			<div id="myProgress">
+				<div id="myBar"><span id="timerNum"></span></div>
+			</div>				
+
+	  </div><!--end question3-->
+
+  	  <div id="question4">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Question 4</h2>
+			<p>What food is Hummus made from? </p>
+			
+				<button id="choice">Avocado</button>
+				<button id="choice">Lentils</button>
+				<button id="choice">Spinach</button>
+				<button id="correct">Chickpeas</button>
+
+			<br/>
+			<br/>
+
+			<h3>Timer</h3>			
+
+			<div id="myProgress">
+				<div id="myBar"><span id="timerNum"></span></div>
+			</div>				
+
+	  </div><!--end question4-->
+
+  	  <div id="question5">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Question 5</h2>
+			<p>What is the most popular spice in the world? </p>
+			
+				<button id="correct">Pepper</button>
+				<button id="choice">Cinnamon</button>
+				<button id="choice">Cumin</button>
+				<button id="choice">Ginger</button>
+
+			<br/>
+			<br/>
+
+			<h3>Timer</h3>			
+
+			<div id="myProgress">				
+				<div id="myBar"><span id="timerNum"></span></div>
+			</div>				
+
+	  </div><!--end question5-->
+
+
+	  <div id="feedbackContainer">
+ 		<h1>Food Trivia Game</h1>
+			<h2>Feedback</h2>
+			<p id="feedback"></p>	  	
+	  </div><!--end info-->	
+
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
+
+function unanswered() {
+	var correctAnswer = $("#correct").text();
+
+	$("#question1").css({"display": "none"});
+
+	$("#feedbackContainer").css({"display": "block"});
+
+	$("#feedback").html("<p>Time's up! You left the question unanswered! The correct answer is " + correctAnswer + "</p>");
+}
 
 function move() {
   var elem = document.getElementById("myBar");   
@@ -186,10 +268,11 @@ function move() {
   function frame() {
     if (width == 100) {
       clearInterval(id);
+      unanswered();
     } else {
       width++; 
       elem.style.width = width + '%'; 
-      document.getElementById("timerNum").innerHTML=width + "%";
+      document.getElementById("timerNum").innerHTML=width + " seconds";
     }
   }
 }
