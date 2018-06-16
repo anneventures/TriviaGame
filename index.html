@@ -68,56 +68,19 @@
 
 			#bckgImg {
 			    width: 100%;
-/*			    height: 400px;
-*/			    background-image: url('assets/images/foodTriviaBckg.png');
+			    background-image: url('assets/images/foodTriviaBckg.png');
 			    background-color: #6F4E37;
 			    background-repeat: no-repeat;
 			    background-size: 100%;
 			}
 
-			#info, .question, #feedbackContainer  {
+			#myContainer {
 				margin:15% 5% 5%;
 				width:80%;
 				background-color:#474747;
 				padding:3%;
 				border-radius: 2%;
 				border:1px solid #fff;
-			}
-
-			.question, #feedbackContainer {
-				display: none;
-			}
-
-			#choice, #correct {
-				font-family: 'Quicksand', sans-serif;
-				font-size:1em;
-				font-weight:bold;				
-				background-color: #ffa101;
-				padding:2% 4%;
-				border: 2px solid #fff;
-				border-radius: 10%;
-				margin-right:2%;
-			}
-
-			#myProgress {
-			  width: 100%;
-			  height: 30px;
-			  position: relative;
-			  background-color: #ddd;
-			}
-
-			#myNextProgress {
-			  width: 30%;
-			  height: 30px;
-			  position: relative;
-			  background-color: #ddd;
-			}
-
-			#myBar, #myNextBar {
-			  background-color: #4CAF50;
-			  width: 10px;
-			  height: 30px;
-			  position: absolute;
 			}		
 
 		</style>
@@ -125,8 +88,9 @@
 	</head>
 	
 	<body id="bckgImg">
-	  <div id="info">
+	  <div id="myContainer">
 
+	  	<div id="instructions">
 		<h1>Food Trivia Game</h1>
 			<p>Welcome to the Food Trivia Game!</p>
 			<p>This game has a total of 5 questions to complete! Here are the details of the game:</p>
@@ -139,194 +103,84 @@
 		    <p>Good luck, and have fun!</p>
 		    <p>Click the button below to begin playing the game.</p>
 		    
-		<button id="play">Play game</button>
+		<button id="play" onclick="timedText()">Play game</button>
 
+		</div><!--end instructions-->
 
-	  </div><!--end info-->
+		<div id="questions"></div>
 
-  	  <div class="question" id="first">
- 		<h1>Food Trivia Game</h1>
-			<h2>Question 1</h2>
-			<p>What ingredient in bread causes it to rise?</p>
-								
-				<button id="correct">Yeast</button>
-				<button id="choice">Sugar</button>
-				<button id="choice">Water</button>
-				<button id="choice">Flour</button>
-
-			<br/>
-			<br/>
-
-			<h3>Timer</h3>			
-
-			<div id="myProgress">
-				<div id="myBar"><span id="timerNum"></span></div>
-			</div>				
-
-	  </div><!--end question1-->
-
-  	  <div class="question" id="second">
- 		<h1>Food Trivia Game</h1>
-			<h2>Question 2</h2>
-			<p>What nut is traditionally on the Waldorf salad? </p>
-			
-				<button id="choice">Pistachio</button>
-				<button id="choice">Almond</button>
-				<button id="choice">Walnut</button>
-				<button id="correct">Cashew</button>
-
-			<br/>
-			<br/>
-
-			<h3>Timer</h3>			
-
-			<div id="myProgress">
-				<div id="myBar"><span id="timerNum"></span></div>
-			</div>				
-
-	  </div><!--end question2-->
-
-  	  <div class="question">
- 		<h1>Food Trivia Game</h1>
-			<h2>Question 3</h2>
-			<p>What is sushi traditionally wrapped in? </p>
-			
-				<button id="choice">Rice</button>
-				<button id="correct">Seaweed</button>
-				<button id="choice">Sashimi</button>
-				<button id="choice">Carrots</button>
-
-			<br/>
-			<br/>
-
-			<h3>Timer</h3>			
-
-			<div id="myProgress">
-				<div id="myBar"><span id="timerNum"></span></div>
-			</div>				
-
-	  </div><!--end question3-->
-
-  	  <div class="question">
- 		<h1>Food Trivia Game</h1>
-			<h2>Question 4</h2>
-			<p>What food is Hummus made from? </p>
-			
-				<button id="choice">Avocado</button>
-				<button id="choice">Lentils</button>
-				<button id="choice">Spinach</button>
-				<button id="correct">Chickpeas</button>
-
-			<br/>
-			<br/>
-
-			<h3>Timer</h3>			
-
-			<div id="myProgress">
-				<div id="myBar"><span id="timerNum"></span></div>
-			</div>				
-
-	  </div><!--end question4-->
-
-  	  <div class="question">
- 		<h1>Food Trivia Game</h1>
-			<h2>Question 5</h2>
-			<p>What is the most popular spice in the world? </p>
-			
-				<button id="correct">Pepper</button>
-				<button id="choice">Cinnamon</button>
-				<button id="choice">Cumin</button>
-				<button id="choice">Ginger</button>
-
-			<br/>
-			<br/>
-
-			<h3>Timer</h3>			
-
-			<div id="myProgress">				
-				<div id="myBar"><span id="timerNum"></span></div>
-			</div>				
-
-	  </div><!--end question5-->
-
-
-	  <div id="feedbackContainer">
- 		<h1>Food Trivia Game</h1>
-			<h2>Feedback</h2>
-			<p id="feedback"></p>
-			<h3>Next question coming up... <span id="countdown"></span></h3>			
-				  	
-	  </div><!--end info-->	
+	  </div><!--end myContainer-->
+	
 
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
+	var allQuestions = [
+
+	 	{number: 1,
+	 	question: 
+	 		"What ingredient in bread causes it to rise?",
+	 	choices: 
+	 		["Yeast", "Sugar", "Water", "Flour"]	
+	 	},
+
+		{number: 2,
+	 	question: 
+	 		"What nut is traditionally on the Waldorf salad?",
+	 	choices: 
+	 		["Pistachio", "Almond", "Walnut", "Cashew"]
+	 	},
+
+	 	{number: 3,
+	 	question: 
+	 		"What is sushi traditionally wrapped in?",
+	 	choices: 
+	 		["Rice", "Seaweed", "Sashimi", "Carrots"]
+	 	},
+
+	 	{number: 4,
+	 	question: 
+	 		"What food is Hummus made from?",
+	 	choices: 
+	 		["Avocado", "Lentils", "Spinach", "Chickpeas"] 	 	
+	 	},
+
+	 	{number: 5,
+	 	question: 
+	 		"What is the most popular spice in the world?",
+	 	choices: 
+	 		["Pepper", "Cinnamon", "Cumin", "Ginger"]
+	 	}
+
+	] //end allQuestions
+	
+	function timedText() {
+    	var x = document.getElementById("questions");
+	    setTimeout(function(){x.innerHTML=allQuestions[0].question}, 0);
+	    setTimeout(function(){x.innerHTML=allQuestions[1].question}, 10000);
+	    setTimeout(function(){x.innerHTML=allQuestions[2].question}, 20000);
+	}
 
 $(document).ready(function() {
 
+	var wins=0;
+	var losses=0;
+	var unanswered=0;
+	var questions = $("#questions");
+	var buttons = $("<button>");
+
+	questions.css({"display":"none"});
+
 	$("#play").click(function(){
-		$("#info").css({"display": "none"});		
-		$("#first").css({"display": "block"});
+		$("#instructions").css({"display": "none"});	
+		questions.css({"display": "block"});
 
-
-
-var correctAnswer = $("#correct").text();
-var elem = document.getElementById("myBar");
-var myWidth = 0;
-var sec = setInterval(frame, 100);
-
-
-$("#correct").click(function() {
-
-	$(this).data("clicked", true);
-
-});
+	});//end click
 
 
 
 
-function unanswered() {
-	$(".question").css({"display": "none"});
-
-	$("#feedbackContainer").css({"display": "block"});
-
-	$("#feedback").html("<p>Time's up! The correct answer is " + correctAnswer + "</p>");    
-
-   	nextFrame();
-	
-
-}
-
-
-  function frame() {
-
-    if (myWidth == 100) {
-    	clearInterval(sec);
-    	unanswered(); 
-    } else if ($("#correct").data("clicked")) {
-    	clearInterval(sec);    	
-		$(".question").css({"display": "none"});
- 		$("#feedbackContainer").css({"display": "block"});
- 		$("#feedback").html("<p>Good job! You selected the correct answer: " + correctAnswer + "</p>");
- 		nextFrame();    	
-    } else {
-    	myWidth++; 
-    	elem.style.width = myWidth + '%'; 
-    	document.getElementById("timerNum").innerHTML=myWidth + " ms";
-    }
-  }
-
-function nextFrame() {
-	setTimeout(function(){
-		$("#feedbackContainer").css({"display": "none"});
-	}, 3000);
-	//need to add function to display second question then 3 > 4 > 5
- }
-
-
-
-});//end click play
 });//end document ready
 
 </script>
