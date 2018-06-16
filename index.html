@@ -155,12 +155,25 @@
 
 	] //end allQuestions
 	
+
+	var firstChoices = allQuestions[0].choices;
+	var text = "<p>";
+		for (var i=0; i<firstChoices.length; i++) {
+			text+="<button>" + firstChoices[i] + "</button>" + "<br><br>";
+		}
+	text+="</p>";
+
 	function timedText() {
     	var x = document.getElementById("questions");
-	    setTimeout(function(){x.innerHTML=allQuestions[0].question}, 0);
+
+	    setTimeout(function(){x.innerHTML="<p>" + allQuestions[0].question + "</p>" + text}, 0);
 	    setTimeout(function(){x.innerHTML=allQuestions[1].question}, 10000);
 	    setTimeout(function(){x.innerHTML=allQuestions[2].question}, 20000);
+	    setTimeout(function(){x.innerHTML=allQuestions[3].question}, 30000);
+	    setTimeout(function(){x.innerHTML=allQuestions[4].question}, 40000);
 	}
+
+
 
 $(document).ready(function() {
 
