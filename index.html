@@ -120,57 +120,90 @@
 
 	 	{number: 1,
 	 	question: 
-	 		"What ingredient in bread causes it to rise?",
+	 		"Question 1: What ingredient in bread causes it to rise?",
 	 	choices: 
 	 		["Yeast", "Sugar", "Water", "Flour"]	
 	 	},
 
 		{number: 2,
 	 	question: 
-	 		"What nut is traditionally on the Waldorf salad?",
+	 		"Question 2: What nut is traditionally on the Waldorf salad?",
 	 	choices: 
 	 		["Pistachio", "Almond", "Walnut", "Cashew"]
 	 	},
 
 	 	{number: 3,
 	 	question: 
-	 		"What is sushi traditionally wrapped in?",
+	 		"Question 3: What is sushi traditionally wrapped in?",
 	 	choices: 
 	 		["Rice", "Seaweed", "Sashimi", "Carrots"]
 	 	},
 
 	 	{number: 4,
 	 	question: 
-	 		"What food is Hummus made from?",
+	 		"Question 4: What food is Hummus made from?",
 	 	choices: 
 	 		["Avocado", "Lentils", "Spinach", "Chickpeas"] 	 	
 	 	},
 
 	 	{number: 5,
 	 	question: 
-	 		"What is the most popular spice in the world?",
+	 		"Question 5: What is the most popular spice in the world?",
 	 	choices: 
 	 		["Pepper", "Cinnamon", "Cumin", "Ginger"]
 	 	}
 
 	] //end allQuestions
-	
 
-	var firstChoices = allQuestions[0].choices;
-	var text = "<p>";
-		for (var i=0; i<firstChoices.length; i++) {
-			text+="<button>" + firstChoices[i] + "</button>" + "<br><br>";
-		}
-	text+="</p>";
+
+
+	function myChoices(a) {
+		var allChoices = allQuestions[a].choices;
+
+		var buttonContainer = $("<div>");
+
+			for (var i=0; i<allChoices.length; i++) {
+
+				var myButton = $("<button>");
+				myButton.addClass("choice");
+				myButton.text(allChoices[i]);
+				buttonContainer.append(myButton);
+				$("#questions").append(myButton);
+			}
+
+	}
+
+
+document.addEventListener("click", function(){
+    document.getElementById("demo").innerHTML = "Hello World";
+});
 
 	function timedText() {
     	var x = document.getElementById("questions");
 
-	    setTimeout(function(){x.innerHTML="<p>" + allQuestions[0].question + "</p>" + text}, 0);
-	    setTimeout(function(){x.innerHTML=allQuestions[1].question}, 10000);
-	    setTimeout(function(){x.innerHTML=allQuestions[2].question}, 20000);
-	    setTimeout(function(){x.innerHTML=allQuestions[3].question}, 30000);
-	    setTimeout(function(){x.innerHTML=allQuestions[4].question}, 40000);
+	    var firstQuest = setTimeout(function(){
+
+	    	x.append("<p>" + allQuestions[0].question + "</p>");
+	    	myChoices(0)
+	    }, 0);
+
+	    setTimeout(function(){
+	    		// text = "";
+	    		x.innerHTML="<p>" + allQuestions[1].question + "</p>" + myChoices(1);
+	    	}, 10000);
+	    setTimeout(function(){
+	    		text="";
+	    		x.innerHTML=allQuestions[2].question + "</p>" + myChoices(2)
+	    	}, 20000);
+	    setTimeout(function(){
+	    		text="";
+	    		x.innerHTML=allQuestions[3].question + "</p>" + myChoices(3)
+	    	}, 30000);
+	    setTimeout(function(){
+	    		text="";
+	    		x.innerHTML=allQuestions[4].question + "</p>" + myChoices(4)
+	    	}, 40000);
+
 	}
 
 
@@ -181,7 +214,9 @@ $(document).ready(function() {
 	var losses=0;
 	var unanswered=0;
 	var questions = $("#questions");
-	var buttons = $("<button>");
+
+    $(document).on("click", ".movie", displayMovieInfo);
+
 
 	questions.css({"display":"none"});
 
