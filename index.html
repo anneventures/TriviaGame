@@ -103,7 +103,7 @@
 		    <p>Good luck, and have fun!</p>
 		    <p>Click the button below to begin playing the game.</p>
 		    
-		<button id="play" onclick="timedText()">Play game</button>
+		<button id="play">Play game</button>
 
 		</div><!--end instructions-->
 
@@ -116,6 +116,23 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
+
+	var wins=0;
+	var losses=0;
+	var unanswered=0;
+	var questions = $("#questions");
+
+
+	questions.css({"display":"none"});
+
+	$("#play").click(function(){
+		$("#instructions").css({"display": "none"});	
+		questions.css({"display": "block"});
+
+		timedText();
+
+	});//end click
+
 	var allQuestions = [
 
 	 	{number: 1,
@@ -160,71 +177,81 @@
 	function myChoices(a) {
 		var allChoices = allQuestions[a].choices;
 
+
 		var buttonContainer = $("<div>");
+
 
 			for (var i=0; i<allChoices.length; i++) {
 
 				var myButton = $("<button>");
+				
 				myButton.addClass("choice");
+
+				myButton.attr("data-name", allChoices[i]);
+
 				myButton.text(allChoices[i]);
+
 				buttonContainer.append(myButton);
+
 				$("#questions").append(myButton);
-			}
+
+			} //end loop
+
 
 	}
 
+	$(document).on("click", ".choice", getClickValue);
 
-document.addEventListener("click", function(){
-    document.getElementById("demo").innerHTML = "Hello World";
-});
+
+	function getClickValue() {
+		var buttonName = $(this).attr("data-name");
+		
+		if (buttonName==="Yeast" || buttonName==="Walnut" || buttonName==="Seaweed" || buttonName==="Chickpeas" || buttonName==="Pepper") {
+			wins++;
+			console.log("correct! you get a score of: " + wins);
+
+		} else {
+			losses++;
+			console.log("sorry, that's incorrect; you lose a score of " + losses);
+		}
+	}
+
 
 	function timedText() {
     	var x = document.getElementById("questions");
 
 	    var firstQuest = setTimeout(function(){
 
-	    	x.append("<p>" + allQuestions[0].question + "</p>");
+	    	x.innerHTML="<p>" + allQuestions[0].question + "</p>";
 	    	myChoices(0)
 	    }, 0);
 
 	    setTimeout(function(){
 	    		// text = "";
-	    		x.innerHTML="<p>" + allQuestions[1].question + "</p>" + myChoices(1);
+	    		x.innerHTML="<p>" + allQuestions[1].question + "</p>"; 
+	    		myChoices(1);
 	    	}, 10000);
 	    setTimeout(function(){
 	    		text="";
-	    		x.innerHTML=allQuestions[2].question + "</p>" + myChoices(2)
+	    		x.innerHTML=allQuestions[2].question + "</p>";
+	    		myChoices(2)
 	    	}, 20000);
 	    setTimeout(function(){
 	    		text="";
-	    		x.innerHTML=allQuestions[3].question + "</p>" + myChoices(3)
+	    		x.innerHTML=allQuestions[3].question + "</p>";
+	    		myChoices(3)
 	    	}, 30000);
 	    setTimeout(function(){
 	    		text="";
-	    		x.innerHTML=allQuestions[4].question + "</p>" + myChoices(4)
+	    		x.innerHTML=allQuestions[4].question + "</p>";
+	    		myChoices(4)
 	    	}, 40000);
 
 	}
 
 
-
 $(document).ready(function() {
 
-	var wins=0;
-	var losses=0;
-	var unanswered=0;
-	var questions = $("#questions");
-
-    $(document).on("click", ".movie", displayMovieInfo);
-
-
-	questions.css({"display":"none"});
-
-	$("#play").click(function(){
-		$("#instructions").css({"display": "none"});	
-		questions.css({"display": "block"});
-
-	});//end click
 
 
 
