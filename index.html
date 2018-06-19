@@ -81,6 +81,10 @@
 				padding:3%;
 				border-radius: 2%;
 				border:1px solid #fff;
+			}
+
+			.choice {
+				margin:2%;
 			}		
 
 		</style>
@@ -133,49 +137,68 @@
 
 	});//end click
 
-	var allQuestions = [
+	var allQuestionsArr = [
 
 	 	{number: 1,
 	 	question: 
 	 		"Question 1: What ingredient in bread causes it to rise?",
 	 	choices: 
-	 		["Yeast", "Sugar", "Water", "Flour"]	
+	 		["Yeast", "Sugar", "Water", "Flour"],
+	 	correct: 
+	 		"Yeast"	
 	 	},
 
 		{number: 2,
 	 	question: 
 	 		"Question 2: What nut is traditionally on the Waldorf salad?",
 	 	choices: 
-	 		["Pistachio", "Almond", "Walnut", "Cashew"]
+	 		["Pistachio", "Almond", "Walnut", "Cashew"],
+	 	correct: 
+	 		"Walnut"	 		
 	 	},
 
 	 	{number: 3,
 	 	question: 
 	 		"Question 3: What is sushi traditionally wrapped in?",
 	 	choices: 
-	 		["Rice", "Seaweed", "Sashimi", "Carrots"]
+	 		["Rice", "Seaweed", "Sashimi", "Carrots"],
+	 	correct: 
+	 		"Seaweed"	 		
 	 	},
 
 	 	{number: 4,
 	 	question: 
 	 		"Question 4: What food is Hummus made from?",
 	 	choices: 
-	 		["Avocado", "Lentils", "Spinach", "Chickpeas"] 	 	
+	 		["Avocado", "Lentils", "Spinach", "Chickpeas"],
+	 	correct: 
+	 		"Chickpeas"	 		 	 	
 	 	},
 
 	 	{number: 5,
 	 	question: 
 	 		"Question 5: What is the most popular spice in the world?",
 	 	choices: 
-	 		["Pepper", "Cinnamon", "Cumin", "Ginger"]
+	 		["Pepper", "Cinnamon", "Cumin", "Ginger"],
+	 	correct: 
+	 		"Pepper"	 		
 	 	}
 
 	] //end allQuestions
 
 
 
-	function myChoices(a) {
-		var allChoices = allQuestions[a].choices;
+	function triviaContent(a) {
+
+
+		var allQuestions = allQuestionsArr[a];
+
+		var allChoices = allQuestions.choices;
+
+		var eachQuestion = allQuestions.question;
+
+		$("#questions").text(eachQuestion);
+
 
 
 		var buttonContainer = $("<div>");
@@ -196,14 +219,13 @@
 				$("#questions").append(myButton);
 
 			} //end loop
-
-
 	}
 
 	$(document).on("click", ".choice", getClickValue);
 
 
 	function getClickValue() {
+
 		var buttonName = $(this).attr("data-name");
 		
 		if (buttonName==="Yeast" || buttonName==="Walnut" || buttonName==="Seaweed" || buttonName==="Chickpeas" || buttonName==="Pepper") {
@@ -217,46 +239,30 @@
 	}
 
 
-	function timedText() {
-    	var x = document.getElementById("questions");
+	function timedText(t) {
 
-	    var firstQuest = setTimeout(function(){
-
-	    	x.innerHTML="<p>" + allQuestions[0].question + "</p>";
-	    	myChoices(0)
+	    setTimeout(function(){
+	    	triviaContent(0)
 	    }, 0);
 
 	    setTimeout(function(){
-	    		// text = "";
-	    		x.innerHTML="<p>" + allQuestions[1].question + "</p>"; 
-	    		myChoices(1);
+	    	triviaContent(1);
 	    	}, 10000);
+
 	    setTimeout(function(){
-	    		text="";
-	    		x.innerHTML=allQuestions[2].question + "</p>";
-	    		myChoices(2)
+	    	triviaContent(2)
 	    	}, 20000);
+
 	    setTimeout(function(){
-	    		text="";
-	    		x.innerHTML=allQuestions[3].question + "</p>";
-	    		myChoices(3)
+	    	triviaContent(3)
 	    	}, 30000);
+
 	    setTimeout(function(){
-	    		text="";
-	    		x.innerHTML=allQuestions[4].question + "</p>";
-	    		myChoices(4)
+	    	triviaContent(4)
 	    	}, 40000);
 
 	}
 
-
-$(document).ready(function() {
-
-
-
-
-
-});//end document ready
 
 </script>
 
