@@ -65,6 +65,11 @@
 				border:3px solid #333;
 			}
 
+			img {
+				float:left;
+				margin-right:2%;
+			}
+
 
 			#bckgImg {
 			    width: 100%;
@@ -111,7 +116,7 @@
 
 		</div><!--end instructions-->
 
-		<div id="questions"></div>
+		<div id="triviaBlock"></div>
 
 	  </div><!--end myContainer-->
 	
@@ -124,16 +129,16 @@
 	var wins=0;
 	var losses=0;
 	var unanswered=0;
-	var questions = $("#questions");
+	var triviaBlock = $("#triviaBlock");
 
 
-	questions.css({"display":"none"});
+	triviaBlock.css({"display":"none"});
 
 	$("#play").click(function(){
 		$("#instructions").css({"display": "none"});	
-		questions.css({"display": "block"});
+		triviaBlock.css({"display": "block"});
 
-		timedText();
+		timedTrivia(0,0);
 
 	});//end click
 
@@ -197,7 +202,7 @@
 
 		var eachQuestion = allQuestions.question;
 
-		$("#questions").text(eachQuestion);
+		$(triviaBlock).html("<p>"+ eachQuestion + "</p>");
 
 
 
@@ -216,7 +221,7 @@
 
 				buttonContainer.append(myButton);
 
-				$("#questions").append(myButton);
+				$(triviaBlock).append(myButton);
 
 			} //end loop
 	}
@@ -228,10 +233,25 @@
 
 		var buttonName = $(this).attr("data-name");
 		
-		if (buttonName==="Yeast" || buttonName==="Walnut" || buttonName==="Seaweed" || buttonName==="Chickpeas" || buttonName==="Pepper") {
+		if (buttonName==="Yeast") {
 			wins++;
-			console.log("correct! you get a score of: " + wins);
-
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
+			timedTrivia(1,5000);
+		} else if (buttonName==="Walnut") {
+			wins++;
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
+			timedTrivia(2,5000);
+		} else if (buttonName==="Seaweed") {
+			wins++;
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
+			timedTrivia(3,5000);			
+		} else if (buttonName==="Chickpeas") {
+			wins++;
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
+			timedTrivia(4,5000);			
+		} else if (buttonName==="Pepper") {
+			wins++;
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + " </p>");		
 		} else {
 			losses++;
 			console.log("sorry, that's incorrect; you lose a score of " + losses);
@@ -239,27 +259,9 @@
 	}
 
 
-	function timedText(t) {
+	function timedTrivia(q,t) {
 
-	    setTimeout(function(){
-	    	triviaContent(0)
-	    }, 0);
-
-	    setTimeout(function(){
-	    	triviaContent(1);
-	    	}, 10000);
-
-	    setTimeout(function(){
-	    	triviaContent(2)
-	    	}, 20000);
-
-	    setTimeout(function(){
-	    	triviaContent(3)
-	    	}, 30000);
-
-	    setTimeout(function(){
-	    	triviaContent(4)
-	    	}, 40000);
+	    setTimeout(function(){triviaContent(q)}, t);
 
 	}
 
