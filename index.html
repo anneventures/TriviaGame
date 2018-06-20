@@ -114,7 +114,10 @@
 		    
 		<button id="play">Play game</button>
 
-		</div><!--end instructions-->
+		</div>
+		<!--end instructions-->
+
+		<div id="timer"></div>
 
 		<div id="triviaBlock"></div>
 
@@ -129,6 +132,7 @@
 	var wins=0;
 	var losses=0;
 	var unanswered=0;
+	var counter=10;
 	var triviaBlock = $("#triviaBlock");
 
 
@@ -137,6 +141,8 @@
 	$("#play").click(function(){
 		$("#instructions").css({"display": "none"});	
 		triviaBlock.css({"display": "block"});
+
+		myTimer();
 
 		timedTrivia(0,0);
 
@@ -193,8 +199,66 @@
 
 
 
-	function triviaContent(a) {
 
+		function myTimer() {
+		
+			var timer = setInterval(tenSeconds, 1000);
+
+				$(document).on("click", ".choice", getClickValue);
+
+			
+			function tenSeconds() {
+				
+				if (counter === 0) {
+					clearInterval(timer);
+					unanswered++
+					console.log("unanswered: " + unanswered);
+				}
+				if (counter > 0) {
+					counter--;
+				}
+				$("#timer").html("<p>Timer: " + counter + "</p>");
+			}//end function
+
+	function getClickValue() {
+
+		clearInterval(timer);
+
+		var buttonName = $(this).attr("data-name");
+
+
+		switch(buttonName) {
+			case "Yeast":
+				correct();
+				timedTrivia(1,3000);
+				break;
+			case "Walnut":
+				correct();
+				timedTrivia(2,3000);
+				break;
+			case "Seaweed":
+				correct();
+				timedTrivia(3,3000);
+				break;
+			case "Chickpeas":
+				correct();
+				timedTrivia(4,3000);
+				break;
+			case "Pepper":
+				correct();
+				$("#triviaBlock").html("<p>That's the correct answer! Great work!</p><p>Here are your scores: " + "<p>Wins: " + wins + "</p><p>Losses: " + losses + "</p><p>Unanswered: " + unanswered + "</p>");
+				break;
+
+			// default:
+			// 	incorrect();
+
+		}//end switch
+
+	}//end function
+
+		}//end function
+
+	function triviaContent(a) {
 
 		var allQuestions = allQuestionsArr[a];
 
@@ -203,7 +267,6 @@
 		var eachQuestion = allQuestions.question;
 
 		$(triviaBlock).html("<p>"+ eachQuestion + "</p>");
-
 
 
 		var buttonContainer = $("<div>");
@@ -226,43 +289,19 @@
 			} //end loop
 	}
 
-	$(document).on("click", ".choice", getClickValue);
 
-
-	function getClickValue() {
-
-		var buttonName = $(this).attr("data-name");
-		
-		if (buttonName==="Yeast") {
-			wins++;
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
-			timedTrivia(1,5000);
-		} else if (buttonName==="Walnut") {
-			wins++;
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
-			timedTrivia(2,5000);
-		} else if (buttonName==="Seaweed") {
-			wins++;
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
-			timedTrivia(3,5000);			
-		} else if (buttonName==="Chickpeas") {
-			wins++;
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");
-			timedTrivia(4,5000);			
-		} else if (buttonName==="Pepper") {
-			wins++;
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + " </p>");		
-		} else {
-			losses++;
-			console.log("sorry, that's incorrect; you lose a score of " + losses);
-		}
-	}
 
 
 	function timedTrivia(q,t) {
 
 	    setTimeout(function(){triviaContent(q)}, t);
 
+	}
+
+	function correct() {
+		$("#timer").html("");
+		wins++;		
+		$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");		
 	}
 
 
