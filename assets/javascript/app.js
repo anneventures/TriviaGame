@@ -72,7 +72,6 @@ var allQuestionsArr = [
 //Timer for each question
 function myTimer() {
 	var timer = setInterval(tenSeconds, 1000);
-	$(document).on("click", ".choice", getClickValue);
 			
 	//Ten seconds countdown
 	function tenSeconds() {		
@@ -90,38 +89,59 @@ function myTimer() {
 	}
 
 
+$(document).on("click", ".choice", getClickValue);
+
+
 	//Get the value of clicked button		
 	function getClickValue() {
 
 		clearInterval(timer);
 		var buttonName = $(this).attr("data-name");
 
-		switch(buttonName) {
-			case "Yeast":
-				correct();
-				timedTrivia(1,3000);
-				break;
-			case "Walnut":
-				correct();
-				timedTrivia(2,3000);
-				break;
-			case "Seaweed":
-				correct();
-				timedTrivia(3,3000);
-				break;
-			case "Chickpeas":
-				correct();
-				timedTrivia(4,3000);
-				break;
-			case "Pepper":
-				correct();
-				$("#triviaBlock").html("<p>That's the correct answer! Great work!</p><p>Here are your scores: " + "<p>Wins: " + wins + "</p><p>Losses: " + losses + "</p><p>Unanswered: " + unanswered + "</p>");
-				break;
-
-			// default:
-			// 	incorrect();
-
+		if (buttonName==="Yeast") {
+			correct();
+			timedTrivia(1,3000);			
+		} else if ((buttonName==="Sugar") || (buttonName==="Water") || (buttonName==="Flour")) {
+			incorrect();
+			timedTrivia(1,3000);						
 		}
+
+		if (buttonName==="Walnut") {
+			correct();
+			timedTrivia(2,3000);			
+		} else if ((buttonName==="Pistachio") || (buttonName==="Almond") || (buttonName==="Cashew")) {
+			incorrect();
+			timedTrivia(2,3000);						
+		}
+
+		if (buttonName==="Seaweed") {
+			correct();
+			timedTrivia(3,3000);			
+		} else if ((buttonName==="Rice") || (buttonName==="Sashimi") || (buttonName==="Carrots")) {
+			incorrect();
+			timedTrivia(3,3000);						
+		}
+
+		if (buttonName==="Chickpeas") {
+			correct();
+			timedTrivia(4,3000);
+		} else if ((buttonName==="Avocado") || (buttonName==="Lentils") || (buttonName==="Spinach")) {
+			incorrect();
+			timedTrivia(4,3000);
+		}
+
+		if (buttonName==="Pepper") {
+			$("#timer").html("");
+			wins++;		
+			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
+
+		} else if ((buttonName==="Cinnamon") || (buttonName==="Cumin") || (buttonName==="Ginger")) {
+			$("#timer").html("");
+			losses++;
+			$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is </p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
+
+		}		
+
 	}
 
 }//End timer function
@@ -157,4 +177,11 @@ function correct() {
 	$("#timer").html("");
 	wins++;		
 	$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");		
+	
+}
+
+function incorrect() {
+	$("#timer").html("");
+	losses++;		
+	$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is </p><p>Next question coming up...</p>");
 }
