@@ -182,9 +182,6 @@ function correct() {
 	
 }
 
-function correctQuestions(x) {
-	console.log(test);
-}
 function incorrect(x) {
 	
 	$("#timer").html("");
