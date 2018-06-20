@@ -69,6 +69,7 @@ var allQuestionsArr = [
 ]
 
 
+
 //Timer for each question
 function myTimer() {
 	var timer = setInterval(tenSeconds, 1000);
@@ -102,7 +103,7 @@ $(document).on("click", ".choice", getClickValue);
 			correct();
 			timedTrivia(1,3000);			
 		} else if ((buttonName==="Sugar") || (buttonName==="Water") || (buttonName==="Flour")) {
-			incorrect();
+			incorrect(0);
 			timedTrivia(1,3000);						
 		}
 
@@ -110,7 +111,7 @@ $(document).on("click", ".choice", getClickValue);
 			correct();
 			timedTrivia(2,3000);			
 		} else if ((buttonName==="Pistachio") || (buttonName==="Almond") || (buttonName==="Cashew")) {
-			incorrect();
+			incorrect(1);
 			timedTrivia(2,3000);						
 		}
 
@@ -118,7 +119,7 @@ $(document).on("click", ".choice", getClickValue);
 			correct();
 			timedTrivia(3,3000);			
 		} else if ((buttonName==="Rice") || (buttonName==="Sashimi") || (buttonName==="Carrots")) {
-			incorrect();
+			incorrect(2);
 			timedTrivia(3,3000);						
 		}
 
@@ -126,7 +127,7 @@ $(document).on("click", ".choice", getClickValue);
 			correct();
 			timedTrivia(4,3000);
 		} else if ((buttonName==="Avocado") || (buttonName==="Lentils") || (buttonName==="Spinach")) {
-			incorrect();
+			incorrect(3);
 			timedTrivia(4,3000);
 		}
 
@@ -137,14 +138,15 @@ $(document).on("click", ".choice", getClickValue);
 
 		} else if ((buttonName==="Cinnamon") || (buttonName==="Cumin") || (buttonName==="Ginger")) {
 			$("#timer").html("");
-			losses++;
-			$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is </p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
-
+			losses++;		
+			$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is Pepper</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
 		}		
 
 	}
 
 }//End timer function
+
+
 
 
 //Trivia questions and loop for the choices
@@ -176,12 +178,17 @@ function timedTrivia(q,t) {
 function correct() {
 	$("#timer").html("");
 	wins++;		
-	$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next question coming up...</p>");		
+	$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next page coming up...</p>");		
 	
 }
 
-function incorrect() {
+function correctQuestions(x) {
+	console.log(test);
+}
+function incorrect(x) {
+	
 	$("#timer").html("");
 	losses++;		
-	$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is </p><p>Next question coming up...</p>");
+	$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is " + allQuestionsArr[x].correct + "</p><p>Next page coming up...</p>");
+
 }
