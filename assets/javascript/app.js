@@ -126,7 +126,7 @@ function myTimer() {
 
 function noAnswer() {
 	unanswered++;
-	$(triviaBlock).html("<p>Sorry, time's up!</p>");
+	$(triviaBlock).html("<p>Sorry, time's up! The correct answer is </p>" + correctAnswersArr[arrCount]);
 
 	setTimeout(questionCount, 3000);
 }
