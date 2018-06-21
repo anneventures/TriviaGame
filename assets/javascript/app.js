@@ -38,40 +38,40 @@ $(document).on("click", ".choice", function(event){
 	}
 });
 
+$(document).on("click", ".reset", function(event){
+
+	playAgain();
+});
+
 
 
 //Array of the trivia questions and choices
 var allQuestionsArr = [
- 	{number: 1,
- 	question: 
+ 	{question: 
  		"Question 1: What ingredient in bread causes it to rise?",
  	choices: 
  		["Yeast", "Sugar", "Water", "Flour"]
  	},
 
-	{number: 2,
-	question: 
+	{question: 
  		"Question 2: What nut is traditionally on the Waldorf salad?",
  	choices: 
  		["Pistachio", "Almond", "Walnut", "Cashew"]
  	},
 
- 	{number: 3,
- 	question: 
+ 	{question: 
  		"Question 3: What is sushi traditionally wrapped in?",
  	choices: 
  		["Rice", "Seaweed", "Sashimi", "Carrots"]
  	},
 
- 	{number: 4,
- 	question: 
+ 	{question: 
  		"Question 4: What food is Hummus made from?",
  	choices: 
  		["Avocado", "Lentils", "Spinach", "Chickpeas"]
  	},
 
- 	{number: 5,
- 	question: 
+ 	{question: 
  		"Question 5: What is the most popular spice in the world?",
  	choices: 
  		["Pepper", "Cinnamon", "Cumin", "Ginger"]
@@ -95,6 +95,8 @@ function questionCount() {
 		displayQuestions();
 		counter=11;
 		myTimer();
+	} else {
+		scorePage();
 	}
 }
 
@@ -132,14 +134,31 @@ function noAnswer() {
 
 function correctAnswer() {
 	wins++;
+	$(timerBlock).html("");	
 	$(triviaBlock).html("<p>That's correct! Great work!</p>");
 	setTimeout(questionCount, 3000);
 }
 
 function wrongAnswer() {
 	losses++;
-	$(triviaBlock).html("<p>Sorry, that's wrong! The correct answer is </p>");
+	$(timerBlock).html("");		
+	$(triviaBlock).html("<p>Sorry, that's wrong! The correct answer is </p>" + correctAnswersArr[arrCount]);
 	setTimeout(questionCount, 3000);	
+}
+
+function scorePage() {
+	$(timerBlock).html("");		
+	$(triviaBlock).html("<p>Thanks for playing the game! Here's your score details: </p><p>Wins: " + wins + "</p><p>Losses: " + losses + "</p><p>Unanswered: " + unanswered + "</p><button class='reset'>Play again!</button>");	
+}
+
+function playAgain() {
+	arrCount = 0;
+	wins = 0;
+	losses = 0;
+	unanswered = 0;
+	counter = 11;
+	displayQuestions();
+	myTimer();
 }
 
 
