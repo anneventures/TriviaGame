@@ -2,22 +2,42 @@
 var wins=0;
 var losses=0;
 var unanswered=0;
-var counter=10;
 var triviaBlock = $("#triviaBlock");
+var timerBlock = $("#timer");
+var counter=11;
+var arrCount = 0;
+var timer;
 
 
 //Do not display trivia questions initially
-triviaBlock.css({"display":"none"});
+triviaBlock.hide();
 
 
 //Once user clicks Play game buton, display trivia questions and call the games' various functions
 $("#play").click(function(){
 
-	$("#instructions").css({"display": "none"});	
-	triviaBlock.css({"display": "block"});
+	$("#instructions").hide();
+	triviaBlock.show();
+
+	displayQuestions();
 	myTimer();
-	timedTrivia(0,0);
+
 });
+
+
+$(document).on("click", ".choice", function(event){
+
+	selectedChoice = $(this).text();
+
+	if (selectedChoice===correctAnswersArr[arrCount]) {
+		clearInterval(timer);
+		correctAnswer();
+	} else {
+		clearInterval(timer);		
+		wrongAnswer();
+	}
+});
+
 
 
 //Array of the trivia questions and choices
@@ -26,60 +46,70 @@ var allQuestionsArr = [
  	question: 
  		"Question 1: What ingredient in bread causes it to rise?",
  	choices: 
- 		["Yeast", "Sugar", "Water", "Flour"],
- 	correct: 
- 		"Yeast"	
+ 		["Yeast", "Sugar", "Water", "Flour"]
  	},
 
 	{number: 2,
 	question: 
  		"Question 2: What nut is traditionally on the Waldorf salad?",
  	choices: 
- 		["Pistachio", "Almond", "Walnut", "Cashew"],
- 	correct: 
- 		"Walnut"	 		
+ 		["Pistachio", "Almond", "Walnut", "Cashew"]
  	},
 
  	{number: 3,
  	question: 
  		"Question 3: What is sushi traditionally wrapped in?",
  	choices: 
- 		["Rice", "Seaweed", "Sashimi", "Carrots"],
- 	correct: 
- 		"Seaweed"	 		
+ 		["Rice", "Seaweed", "Sashimi", "Carrots"]
  	},
 
  	{number: 4,
  	question: 
  		"Question 4: What food is Hummus made from?",
  	choices: 
- 		["Avocado", "Lentils", "Spinach", "Chickpeas"],
- 	correct: 
- 		"Chickpeas"	 		 	 	
+ 		["Avocado", "Lentils", "Spinach", "Chickpeas"]
  	},
 
  	{number: 5,
  	question: 
  		"Question 5: What is the most popular spice in the world?",
  	choices: 
- 		["Pepper", "Cinnamon", "Cumin", "Ginger"],
- 	correct: 
- 		"Pepper"	 		
+ 		["Pepper", "Cinnamon", "Cumin", "Ginger"]
  	}
-]
+];
 
+
+var correctAnswersArr = ["Yeast", "Walnut", "Seaweed", "Chickpeas", "Pepper"];
+
+
+function displayQuestions() {
+	
+	$(triviaBlock).html(triviaContent(arrCount));
+
+}
+
+
+function questionCount() {
+	if (arrCount < 4) {
+		arrCount++;
+		displayQuestions();
+		counter=11;
+		myTimer();
+	}
+}
 
 
 //Timer for each question
 function myTimer() {
-	var timer = setInterval(tenSeconds, 1000);
-			
+
+	timer = setInterval(tenSeconds, 1000);
+
 	//Ten seconds countdown
-	function tenSeconds() {		
+	function tenSeconds() {
+		
 		if (counter === 0) {
 			clearInterval(timer);
-			unanswered++
-			console.log("unanswered: " + unanswered);
+			noAnswer();		
 		}
 
 		if (counter > 0) {
@@ -89,69 +119,34 @@ function myTimer() {
 		$("#timer").html("<p>Timer: " + counter + "</p>");
 	}
 
+}
 
-$(document).on("click", ".choice", getClickValue);
+
+function noAnswer() {
+	unanswered++;
+	$(triviaBlock).html("<p>Sorry, time's up!</p>");
+
+	setTimeout(questionCount, 3000);
+}
 
 
-	//Get the value of clicked button		
-	function getClickValue() {
+function correctAnswer() {
+	wins++;
+	$(triviaBlock).html("<p>That's correct! Great work!</p>");
+	setTimeout(questionCount, 3000);
+}
 
-		clearInterval(timer);
-		var buttonName = $(this).attr("data-name");
-
-		if (buttonName==="Yeast") {
-			correct();
-			timedTrivia(1,3000);			
-		} else if ((buttonName==="Sugar") || (buttonName==="Water") || (buttonName==="Flour")) {
-			incorrect(0);
-			timedTrivia(1,3000);						
-		}
-
-		if (buttonName==="Walnut") {
-			correct();
-			timedTrivia(2,3000);			
-		} else if ((buttonName==="Pistachio") || (buttonName==="Almond") || (buttonName==="Cashew")) {
-			incorrect(1);
-			timedTrivia(2,3000);						
-		}
-
-		if (buttonName==="Seaweed") {
-			correct();
-			timedTrivia(3,3000);			
-		} else if ((buttonName==="Rice") || (buttonName==="Sashimi") || (buttonName==="Carrots")) {
-			incorrect(2);
-			timedTrivia(3,3000);						
-		}
-
-		if (buttonName==="Chickpeas") {
-			correct();
-			timedTrivia(4,3000);
-		} else if ((buttonName==="Avocado") || (buttonName==="Lentils") || (buttonName==="Spinach")) {
-			incorrect(3);
-			timedTrivia(4,3000);
-		}
-
-		if (buttonName==="Pepper") {
-			$("#timer").html("");
-			wins++;		
-			$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
-
-		} else if ((buttonName==="Cinnamon") || (buttonName==="Cumin") || (buttonName==="Ginger")) {
-			$("#timer").html("");
-			losses++;		
-			$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is Pepper</p><p>Here are your scores: </p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Unanswered: " + unanswered + "</p>");
-		}		
-
-	}
-
-}//End timer function
-
+function wrongAnswer() {
+	losses++;
+	$(triviaBlock).html("<p>Sorry, that's wrong! The correct answer is </p>");
+	setTimeout(questionCount, 3000);	
+}
 
 
 
 //Trivia questions and loop for the choices
-function triviaContent(a) {
-	var allQuestions = allQuestionsArr[a];
+function triviaContent(x) {
+	var allQuestions = allQuestionsArr[x];
 	var allChoices = allQuestions.choices;
 	var eachQuestion = allQuestions.question;
 	$(triviaBlock).html("<p>"+ eachQuestion + "</p>");
@@ -167,25 +162,3 @@ function triviaContent(a) {
 	}
 }
 
-
-//Timer for question feedback content
-function timedTrivia(q,t) {
-    setTimeout(function(){triviaContent(q)}, t);
-}
-
-
-//When a user clicks on the correct button choice
-function correct() {
-	$("#timer").html("");
-	wins++;		
-	$(triviaBlock).html("<p>That's the correct answer! Great work!</p><p>Next page coming up...</p>");		
-	
-}
-
-function incorrect(x) {
-	
-	$("#timer").html("");
-	losses++;		
-	$(triviaBlock).html("<p>Sorry, that's incorrect. The answer is " + allQuestionsArr[x].correct + "</p><p>Next page coming up...</p>");
-
-}
