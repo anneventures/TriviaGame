@@ -8,3 +8,5 @@
 		  <li>Your total score will be displayed at the end of the game.</li>
     </ul>
     <p>Good luck, and have fun!</p>
+    
+    <p>Link to app: https://anneventures.github.io/TriviaGame/</p>
